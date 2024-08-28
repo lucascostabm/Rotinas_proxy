@@ -29,6 +29,7 @@ CHAMADA AS (
         WHERE 1=1
             AND cham.orgao_id = 2
             AND YEAR(cham.chamada_data_hora_inclusao) = :ANO_FATO
+            AND cham.chamada_classificacao_data_hora IS NOT NULL
     )
     SELECT
         chamada_numero,
@@ -99,4 +100,5 @@ FROM OCORRENCIA
 LEFT JOIN CHAMADA ON OCORRENCIA.numero_chamada_cad = CHAMADA.chamada_numero
 LEFT JOIN EMPENHOS ON CHAMADA.chamada_atendimento_id = EMPENHOS.chamada_atendimento_id
 LEFT JOIN LIGACOES ON OCORRENCIA.numero_chamada_cad = LIGACOES.chamada_numero
-LEFT JOIN CHAMADA_ATENDIMENTO ON CHAMADA_ATENDIMENTO.empenho_id = EMPENHOS.empenho_id;
+LEFT JOIN CHAMADA_ATENDIMENTO ON CHAMADA_ATENDIMENTO.empenho_id = EMPENHOS.empenho_id
+WHERE CHAMADA.chamada_numero IS NOT NULL;
